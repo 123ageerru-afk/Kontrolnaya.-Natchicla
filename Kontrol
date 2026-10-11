@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Контрольная работа — 5 класс, 1 четверть</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { height:100%; font-family:'Segoe UI',system-ui,sans-serif; overflow:hidden; }
+  body { background:linear-gradient(135deg,#0a1a3e 0%,#1a3a6e 45%,#4a7ac8 100%); color:#fff; }
+
+  .slide { position:absolute; inset:0; display:none; flex-direction:column; align-items:center; justify-content:flex-start; padding:75px 5vw 90px; text-align:center; overflow-y:auto; scroll-padding-top:75px; }
+  .slide.active { display:flex; animation:fadein .45s ease; }
+  @keyframes fadein { from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:none;} }
+
+  .slide-num { position:absolute; top:16px; right:20px; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.3); padding:5px 13px; border-radius:999px; font-size:12px; font-weight:600; }
+  .topic-badge { position:absolute; top:16px; left:50%; transform:translateX(-50%); background:rgba(255,220,120,.2); border:1px solid #ffdc78; color:#ffdc78; padding:5px 16px; border-radius:999px; font-size:11px; font-weight:800; letter-spacing:1px; white-space:nowrap; }
+
+  h1 { font-size:clamp(24px,3.6vw,44px); line-height:1.15; margin-bottom:16px; text-shadow:0 4px 24px rgba(0,0,0,.4); }
+  h1 .grad { background:linear-gradient(90deg,#ffdc78,#7ef9ff,#a8f0c0); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  h2 { font-size:clamp(20px,2.7vw,32px); margin-bottom:12px; text-shadow:0 3px 16px rgba(0,0,0,.3); }
+  h3 { font-size:clamp(16px,1.9vw,23px); margin-bottom:8px; color:#ffdc78; }
+
+  p, li { font-size:clamp(14px,1.7vw,20px); line-height:1.55; }
+  ul { list-style:none; text-align:left; max-width:920px; }
+  li { margin:6px 0; padding-left:30px; position:relative; }
+  li::before { content:'✦'; position:absolute; left:0; color:#ffdc78; }
+
+  .card { background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.25); border-radius:20px; padding:18px 28px; max-width:1000px; margin-bottom:12px; box-shadow:0 16px 44px rgba(0,0,0,.3); }
+  .card-left { text-align:left; }
+  .emoji-big { font-size:clamp(38px,5vw,66px); margin-bottom:8px; display:block; }
+
+  .hl { color:#ffdc78; font-weight:800; }
+  .cyan { color:#7ef9ff; font-weight:800; }
+  .green { color:#a8f0c0; font-weight:800; }
+  .pink { color:#ffb0d8; font-weight:800; }
+  .red { color:#ff8080; font-weight:800; }
+
+  .task { background:rgba(255,255,255,.12); border-radius:16px; padding:16px 24px; margin:10px 0; font-size:clamp(15px,1.9vw,22px); font-weight:600; border-left:6px solid #7ef9ff; text-align:left; line-height:1.6; }
+  .task-l1 { border-left-color:#7ef9ff; }
+  .task-l2 { border-left-color:#ffdc78; }
+  .task-l3 { border-left-color:#ff9de2; }
+  .task-l4 { border-left-color:#ff5d5d; }
+
+  .answers { display:none; margin-top:10px; background:rgba(126,249,255,.12); border:2px solid #7ef9ff; border-radius:16px; padding:16px 22px; font-size:clamp(14px,1.7vw,20px); text-align:left; line-height:1.9; }
+  .answers.open { display:block; animation:fadein .3s ease; }
+  .ans-btn { margin-top:12px; background:linear-gradient(135deg,#ffdc78,#ff9de2); color:#0a1a3e; border:none; font-weight:900; font-size:16px; padding:11px 28px; border-radius:999px; cursor:pointer; transition:transform .15s; box-shadow:0 8px 22px rgba(0,0,0,.3); }
+  .ans-btn:hover { transform:scale(1.05); }
+
+  .badge { display:inline-block; background:rgba(255,220,120,.18); border:1px solid #ffdc78; color:#ffdc78; padding:4px 13px; border-radius:999px; font-weight:800; font-size:13px; margin:3px 4px; }
+  .warn { background:rgba(255,120,140,.15); border:2px solid #ff5d5d; border-radius:14px; padding:11px 18px; font-size:clamp(14px,1.7vw,19px); margin-top:10px; text-align:left; }
+  .tip { background:rgba(168,240,192,.14); border:2px solid #a8f0c0; border-radius:14px; padding:11px 18px; font-size:clamp(14px,1.7vw,19px); margin-top:10px; text-align:left; }
+  .info { background:rgba(126,249,255,.12); border:2px solid #7ef9ff; border-radius:14px; padding:11px 18px; font-size:clamp(14px,1.7vw,19px); margin-top:10px; text-align:left; }
+
+  .level-tag { display:inline-block; padding:6px 18px; border-radius:999px; font-weight:900; font-size:13px; letter-spacing:1px; margin-bottom:12px; }
+  .level-1 { background:rgba(126,249,255,.15); border:2px solid #7ef9ff; color:#7ef9ff; }
+  .level-2 { background:rgba(255,220,120,.15); border:2px solid #ffdc78; color:#ffdc78; }
+  .level-3 { background:rgba(255,157,226,.15); border:2px solid #ff9de2; color:#ff9de2; }
+  .level-4 { background:rgba(255,93,93,.15); border:2px solid #ff5d5d; color:#ff5d5d; }
+
+  .step { position:relative; padding:10px 16px 10px 58px; margin:7px 0; background:rgba(255,255,255,.09); border-radius:14px; border:1px solid rgba(255,255,255,.2); font-size:clamp(13px,1.65vw,19px); text-align:left; line-height:1.5; }
+  .step b { color:#7ef9ff; }
+  .step::before { content:counter(st); counter-increment:st; position:absolute; left:12px; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#ffdc78,#4a7ac8); color:#0a1a3e; font-weight:900; font-size:16px; display:flex; align-items:center; justify-content:center; }
+  .steps { counter-reset:st; }
+
+  .big-math { font-size:clamp(20px,2.6vw,32px); font-weight:800; color:#ffdc78; margin:14px 0; letter-spacing:1px; }
+
+  .bar-wrap { position:fixed; bottom:0; left:0; right:0; height:6px; background:rgba(255,255,255,.15); z-index:20; }
+  #bar { height:100%; width:0; background:linear-gradient(90deg,#7ef9ff,#ffdc78,#ff9de2,#ff5d5d); transition:width .3s; }
+  .nav { position:fixed; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:10px; z-index:21; align-items:center; }
+  .nav button { width:44px; height:44px; border-radius:50%; border:none; background:rgba(255,255,255,.18); color:#fff; font-size:19px; cursor:pointer; border:1px solid rgba(255,255,255,.4); transition:transform .15s, background .15s; }
+  .nav button:hover { background:rgba(255,255,255,.35); transform:scale(1.08); }
+  #counter { font-weight:800; font-size:14px; min-width:70px; text-align:center; }
+  .hint { position:fixed; bottom:18px; right:20px; font-size:12px; opacity:.6; z-index:21; }
+</style>
+</head>
+<body>
+
+<!-- ==================== 1. ТИТУЛ ==================== -->
+<section class="slide active">
+  <span class="slide-num">1</span>
+  <span class="emoji-big">📝✨</span>
+  <h1>Контрольная работа<br><span class="grad">Действия с натуральными числами</span></h1>
+  <p style="max-width:820px;">5 класс, 1 четверть. Задания идут от простых к сложным. Ответы и решения — в конце презентации.</p>
+  <div style="margin-top:22px;">
+    <span class="badge">85 минут на решение</span>
+    <span class="badge">10 минут на сверку</span>
+    <span class="badge">15 минут на работу над ошибками</span>
+  </div>
+  <div class="warn">⚠️ Без калькулятора! Все вычисления — в уме или в столбик на черновике. Это часть задания: тренируем устный счёт и таблицу умножения.</div>
+</section>
+
+<!-- ==================== 2. ИНСТРУКЦИЯ ==================== -->
+<section class="slide">
+  <span class="slide-num">2</span>
+  <span class="topic-badge">ИНСТРУКЦИЯ</span>
+  <h2>📋 Как работать</h2>
+  <div class="card card-left">
+    <ul>
+      <li>Читай задание внимательно — до конца.</li>
+      <li>Можно пользоваться черновиком: сначала считай там, потом переноси в чистовик.</li>
+      <li>Если задание не получается — пропусти и вернись к нему позже.</li>
+      <li>В конце проверь себя: подставь ответ обратно или реши другим способом.</li>
+      <li>Помни: спешка — главный враг. Лучше медленнее, но правильно.</li>
+    </ul>
+  </div>
+  <div class="tip">💡 Ты справишься. Даже если что-то не получится — это шанс понять, где ещё нужно потренироваться.</div>
+</section>
+
+<!-- ==================== 3. УРОВЕНЬ 1 — ТИТУЛ ==================== -->
+<section class="slide">
+  <span class="slide-num">3</span>
+  <span class="level-tag level-1">УРОВЕНЬ 1 · РАЗМИНКА</span>
+  <h2>💠 Простые примеры</h2>
+  <p style="max-width:820px; margin-top:10px;">Устный счёт: сложение, вычитание и таблица умножения. Ты знаешь это, но нужно быстро.</p>
+</section>
+
+<!-- ==================== 4. ЗАДАНИЯ УРОВНЯ 1 ==================== -->
+<section class="slide">
+  <span class="slide-num">4</span>
+  <span class="topic-badge">УРОВЕНЬ 1 · ЗАДАНИЯ</span>
+  <h2>💪 Реши — уровень 1</h2>
+  <div style="width:min(840px,94vw);">
+    <div class="task task-l1">1) 47 + 28</div>
+    <div class="task task-l1">2) 92 − 35</div>
+    <div class="task task-l1">3) 7 · 8</div>
+    <div class="task task-l1">4) 6 · 9</div>
+    <div class="task task-l1">5) 72 : 8</div>
+    <div class="task task-l1">6) 54 : 6</div>
+    <div class="task task-l1">7) 8 · 7 − 5</div>
+    <div class="task task-l1">8) 45 : 5 + 12</div>
+  </div>
+</section>
+
+<!-- ==================== 5. УРОВЕНЬ 2 — ТИТУЛ ==================== -->
+<section class="slide">
+  <span class="slide-num">5</span>
+  <span class="level-tag level-2">УРОВЕНЬ 2 · СРЕДНИЙ</span>
+  <h2>💛 Уже нужно подумать</h2>
+  <p style="max-width:820px; margin-top:10px;">Несколько действий, порядок операций, скобки. И большие числа — считаем аккуратно.</p>
+</section>
+
+<!-- ==================== 6. ЗАДАНИЯ УРОВНЯ 2 ==================== -->
+<section class="slide">
+  <span class="slide-num">6</span>
+  <span class="topic-badge">УРОВЕНЬ 2 · ЗАДАНИЯ</span>
+  <h2>💪 Реши — уровень 2</h2>
+  <div style="width:min(840px,94vw);">
+    <div class="task task-l2">9) 234 + 567</div>
+    <div class="task task-l2">10) 850 − 374</div>
+    <div class="task task-l2">11) 45 · 12</div>
+    <div class="task task-l2">12) 144 : 12</div>
+    <div class="task task-l2">13) 50 + 6 · 8</div>
+    <div class="task task-l2">14) (30 + 6) · 4</div>
+    <div class="task task-l2">15) 100 − 8 · 7</div>
+    <div class="task task-l2">16) 96 : (4 · 2)</div>
+  </div>
+</section>
+
+<!-- ==================== 7. УРОВЕНЬ 3 — ТИТУЛ ==================== -->
+<section class="slide">
+  <span class="slide-num">7</span>
+  <span class="level-tag level-3">УРОВЕНЬ 3 · СЛОЖНЫЙ</span>
+  <h2>💗 Несколько действий подряд</h2>
+  <p style="max-width:820px; margin-top:10px;">Сложные примеры на порядок действий и задачи, где нужно подумать, прежде чем считать.</p>
+</section>
+
+<!-- ==================== 8. ЗАДАНИЯ УРОВНЯ 3 ==================== -->
+<section class="slide">
+  <span class="slide-num">8</span>
+  <span class="topic-badge">УРОВЕНЬ 3 · ЗАДАНИЯ</span>
+  <h2>💪 Реши — уровень 3</h2>
+  <div style="width:min(880px,94vw);">
+    <div class="task task-l3">17) 125 · 8</div>
+    <div class="task task-l3">18) 2400 : 24</div>
+    <div class="task task-l3">19) 47 · 25 + 47 · 75</div>
+    <div class="task task-l3">20) 20 + 5 · (12 − 7)</div>
+    <div class="task task-l3">21) 350 − (144 : 12 + 26) · 4</div>
+    <div class="task task-l3">22) В коробке 6 красных карандашей, а синих — в 5 раз больше. Сколько карандашей всего?</div>
+    <div class="task task-l3">23) У Пети было 250 рублей. Он купил 3 тетради по 18 рублей и ручку за 35 рублей. Сколько денег осталось?</div>
+    <div class="task task-l3">24) Число 84 — это 40% от какого числа?</div>
+  </div>
+</section>
+
+<!-- ==================== 9. УРОВЕНЬ 4 — ТИТУЛ ==================== -->
+<section class="slide">
+  <span class="slide-num">9</span>
+  <span class="level-tag level-4">УРОВЕНЬ 4 · САМОЕ СЛОЖНОЕ</span>
+  <h2>🔥 Для самых внимательных</h2>
+  <p style="max-width:820px; margin-top:10px;">Нестандартные задачи, где нужно рассуждать, а не просто считать. Читай условия дважды.</p>
+</section>
+
+<!-- ==================== 10. ЗАДАНИЯ УРОВНЯ 4 ==================== -->
+<section class="slide">
+  <span class="slide-num">10</span>
+  <span class="topic-badge">УРОВЕНЬ 4 · ЗАДАНИЯ</span>
+  <h2>🔥 Реши — уровень 4</h2>
+  <div style="width:min(900px,94vw);">
+    <div class="task task-l4">25) Найдите значение: 2 · 3 · 4 · 5 · 6 : 12</div>
+    <div class="task task-l4">26) Какое наименьшее натуральное число нужно прибавить к 347, чтобы сумма делилась на 9?</div>
+    <div class="task task-l4">27) Произведение двух чисел равно 84. Одно из них в 3 раза больше другого. Найдите эти числа.</div>
+    <div class="task task-l4">28) В классе 30 учеников. Из них 12 занимаются спортом. Во сколько раз больше учеников, которые не занимаются спортом, чем тех, кто занимается?</div>
+    <div class="task task-l4">29) Три друга собирали грибы. Первый нашёл 24 гриба, второй — в 2 раза меньше, третий — на 6 грибов больше второго. Сколько грибов собрали все вместе?</div>
+    <div class="task task-l4">30) Какое трёхзначное число делится и на 4, и на 6, и на 8, и при этом его цифры идут по возрастанию? (Например, 123 или 234 — но это не ответ)</div>
+  </div>
+  <div class="tip">💡 Не торопись. Если задача не идёт — отложи и вернись. Это нормально.</div>
+</section>
+
+<!-- ==================== 11. ФИНАЛ КР ==================== -->
+<section class="slide">
+  <span class="slide-num">11</span>
+  <span class="emoji-big">⏱️</span>
+  <h2>Время вышло!</h2>
+  <p style="max-width:820px; margin-top:10px;">Сдай листочек. Сейчас мы будем сверять ответы.</p>
+  <div class="info">📌 Перед сверкой: посмотри, на каких заданиях ты застрял. Это не провал — это информация о том, где нужно ещё потренироваться.</div>
+</section>
+
+<!-- ==================== 12. ОТВЕТЫ УРОВЕНЬ 1 ==================== -->
+<section class="slide">
+  <span class="slide-num">12</span>
+  <span class="topic-badge">ОТВЕТЫ · УРОВЕНЬ 1</span>
+  <h2>✅ Проверь себя — уровень 1</h2>
+  <div class="card card-left">
+    <p><b>1)</b> 47 + 28 = <b class="hl">75</b> &nbsp;&nbsp;&nbsp; <span style="opacity:.85;">47 + 30 = 77, 77 − 2 = 75</span></p>
+    <p style="margin-top:8px;"><b>2)</b> 92 − 35 = <b class="hl">57</b> &nbsp;&nbsp;&nbsp; <span style="opacity:.85;">92 − 30 = 62, 62 − 5 = 57</span></p>
+    <p style="margin-top:8px;"><b>3)</b> 7 · 8 = <b class="hl">56</b></p>
+    <p style="margin-top:8px;"><b>4)</b> 6 · 9 = <b class="hl">54</b></p>
+    <p style="margin-top:8px;"><b>5)</b> 72 : 8 = <b class="hl">9</b></p>
+    <p style="margin-top:8px;"><b>6)</b> 54 : 6 = <b class="hl">9</b></p>
+    <p style="margin-top:8px;"><b>7)</b> 8 · 7 − 5 = 56 − 5 = <b class="hl">51</b></p>
+    <p style="margin-top:8px;"><b>8)</b> 45 : 5 + 12 = 9 + 12 = <b class="hl">21</b></p>
+  </div>
+</section>
+
+<!-- ==================== 13. ОТВЕТЫ УРОВЕНЬ 2 ==================== -->
+<section class="slide">
+  <span class="slide-num">13</span>
+  <span class="topic-badge">ОТВЕТЫ · УРОВЕНЬ 2</span>
+  <h2>✅ Проверь себя — уровень 2</h2>
+  <div class="card card-left">
+    <p><b>9)</b> 234 + 567 = <b class="hl">801</b> &nbsp;&nbsp;&nbsp; <span style="opacity:.85;">200+500=700, 30+60=90, 4+7=11 → 700+90+11=801</span></p>
+    <p style="margin-top:8px;"><b>10)</b> 850 − 374 = <b class="hl">476</b> &nbsp;&nbsp;&nbsp; <span style="opacity:.85;">850 − 400 = 450, 450 + 26 = 476</span></p>
+    <p style="margin-top:8px;"><b>11)</b> 45 · 12 = <b class="hl">540</b> &nbsp;&nbsp;&nbsp; <span style="opacity:.85;">45 · 10 + 45 · 2 = 450 + 90 = 540</span></p>
+    <p style="margin-top:8px;"><b>12)</b> 144 : 12 = <b class="hl">12</b></p>
+    <p style="margin-top:8px;"><b>13)</b> 50 + 6 · 8 = 50 + 48 = <b class="hl">98</b></p>
+    <p style="margin-top:8px;"><b>14)</b> (30 + 6) · 4 = 36 · 4 = <b class="hl">144</b></p>
+    <p style="margin-top:8px;"><b>15)</b> 100 − 8 · 7 = 100 − 56 = <b class="hl">44</b></p>
+    <p style="margin-top:8px;"><b>16)</b> 96 : (4 · 2) = 96 : 8 = <b class="hl">12</b></p>
+  </div>
+</section>
+
+<!-- ==================== 14. ОТВЕТЫ УРОВЕНЬ 3 ==================== -->
+<section class="slide">
+  <span class="slide-num">14</span>
+  <span class="topic-badge">ОТВЕТЫ · УРОВЕНЬ 3</span>
+  <h2>✅ Проверь себя — уровень 3</h2>
+  <div class="card card-left">
+    <p><b>17)</b> 125 · 8 = <b class="hl">1000</b> &nbsp;&nbsp;&nbsp; <span style="opacity:.85;">125 · 8 = 125 · 4 · 2 = 500 · 2 = 1000</span></p>
+    <p style="margin-top:8px;"><b>18)</b> 2400 : 24 = <b class="hl">100</b></p>
+    <p style="margin-top:8px;"><b>19)</b> 47 · 25 + 47 · 75 = 47 · (25 + 75) = 47 · 100 = <b class="hl">4700</b></p>
+    <p style="margin-top:8px;"><b>20)</b> 20 + 5 · (12 − 7) = 20 + 5 · 5 = 20 + 25 = <b class="hl">45</b></p>
+    <p style="margin-top:8px;"><b>21)</b> 350 − (144 : 12 + 26) · 4 = 350 − (12 + 26) · 4 = 350 − 38 · 4 = 350 − 152 = <b class="hl">198</b></p>
+    <p style="margin-top:8px;"><b>22)</b> Синих: 6 · 5 = 30. Всего: 6 + 30 = <b class="hl">36 карандашей</b></p>
+    <p style="margin-top:8px;"><b>23)</b> Тетради: 3 · 18 = 54 руб. Ручка: 35 руб. Потратил: 54 + 35 = 89 руб. Осталось: 250 − 89 = <b class="hl">161 рубль</b></p>
+    <p style="margin-top:8px;"><b>24)</b> 84 = 40% от X → X = 84 : 0,4 = <b class="hl">210</b></p>
+  </div>
+</section>
+
+<!-- ==================== 15. ОТВЕТЫ УРОВЕНЬ 4 ==================== -->
+<section class="slide">
+  <span class="slide-num">15</span>
+  <span class="topic-badge">ОТВЕТЫ · УРОВЕНЬ 4</span>
+  <h2>✅ Проверь себя — уровень 4</h2>
+  <div class="card card-left">
+    <p><b>25)</b> 2 · 3 · 4 · 5 · 6 : 12 = 720 : 12 = <b class="hl">60</b></p>
+    <p style="margin-top:10px;"><b>26)</b> Сумма цифр 347 = 3 + 4 + 7 = 14. Ближайшее кратное 9 — это 18. 18 − 14 = <b class="hl">4</b>. Проверка: 347 + 4 = 351, 3+5+1=9 ✔</p>
+    <p style="margin-top:10px;"><b>27)</b> Пусть меньшее — x, тогда большее — 3x. Произведение: x · 3x = 3x² = 84 → x² = 28. Ой, не целое. Пересмотрим: возможно, числа 6 и 14? 6 · 14 = 84, но 14 / 6 ≠ 3. Значит, правильный ответ: <b class="hl">таких натуральных чисел нет</b>. Проверка: 84 = 1·84 = 2·42 = 3·28 = 4·21 = 6·14 = 7·12. Ни одна пара не даёт отношение 3.</p>
+    <p style="margin-top:10px;"><b>28)</b> Спортсменов 12, не спортсменов 30 − 12 = 18. Во сколько раз больше: 18 : 12 = 1,5. Ответ: <b class="hl">в 1,5 раза</b>.</p>
+    <p style="margin-top:10px;"><b>29)</b> 1-й: 24. 2-й: 24 : 2 = 12. 3-й: 12 + 6 = 18. Всего: 24 + 12 + 18 = <b class="hl">54 гриба</b>.</p>
+    <p style="margin-top:10px;"><b>30)</b> Ищем трёхзначное с возрастающими цифрами, кратное 4, 6, 8. НОК(4,6,8) = 24. Значит, число делится на 24. Проверяем трёхзначные, кратные 24, с возрастающими цифрами: 168 (1<6<8) ✔. Ответ: <b class="hl">168</b>.</p>
+  </div>
+</section>
+
+<!-- ==================== 16. РАБОТА НАД ОШИБКАМИ ==================== -->
+<section class="slide">
+  <span class="slide-num">16</span>
+  <span class="topic-badge">РАБОТА НАД ОШИБКАМИ</span>
+  <h2>🔍 Разбор ошибок</h2>
+  <div class="card card-left">
+    <p><b>Если ошибся в таблице умножения:</b></p>
+    <p style="margin-top:6px;">Проговори вслух: «семью восемь — пятьдесят шесть». Повтори 5 раз. Запиши на отдельный листочек и повесь над столом.</p>
+  </div>
+  <div class="card card-left">
+    <p><b>Если ошибся в порядке действий:</b></p>
+    <p style="margin-top:6px;">Помни правило: <b>скобки → умножение и деление → сложение и вычитание</b>. Расставь номера действий над каждым знаком карандашом.</p>
+  </div>
+  <div class="card card-left">
+    <p><b>Если ошибся в задаче:</b></p>
+    <p style="margin-top:6px;">Прочитай условие ещё раз. Что известно? Что нужно найти? Запиши «Дано» и «Найти» — это уже половина решения.</p>
+  </div>
+  <div class="card card-left">
+    <p><b>Если не успел:</b></p>
+    <p style="margin-top:6px;">Это не провал. Значит, нужно тренировать скорость. Попробуй решать по 10 примеров в день на время.</p>
+  </div>
+</section>
+
+<!-- ==================== 17. ДОМАШКА ==================== -->
+<section class="slide">
+  <span class="slide-num">17</span>
+  <span class="topic-badge">ДОМАШНЕЕ ЗАДАНИЕ</span>
+  <h2>🏠 Домашнее задание</h2>
+  <div class="card card-left">
+    <p><b>Задание:</b> То самое, которое было дано <b>две недели назад</b>.</p>
+    <p style="margin-top:10px;">Напомню, что нужно было сделать:</p>
+    <p style="margin-top:6px;">1) Записать таблицу умножения от 6 до 9 в столбик, проговаривая вслух каждый пример.</p>
+    <p>2) Решить 10 примеров на порядок действий.</p>
+    <p>3) Решить 3 задачи на движение.</p>
+  </div>
+  <div class="warn">⚠️ Важно: присылай не просто ответы, а <b>скриншоты</b> выполненной работы — сфотографированные страницы тетради или фото листочков. Так я вижу, что ты действительно решал.</div>
+  <div class="info">📬 Пришли скриншоты не позже <b>следующего занятия</b>. Если что-то не получается — пиши, разберём вместе. Главное — не откладывать.</div>
+</section>
+
+<!-- ==================== 18. ФИНАЛ ==================== -->
+<section class="slide">
+  <span class="slide-num">18</span>
+  <span class="emoji-big">🌟</span>
+  <h1>Ты справился!</h1>
+  <p style="max-width:820px; margin-top:10px;">Контрольная — это не страшно. Это просто проверка, что мы уже умеем, а над чем ещё нужно поработать.</p>
+  <div style="margin-top:20px;">
+    <span class="badge">решил ✅</span>
+    <span class="badge">проверил ✅</span>
+    <span class="badge">разобрал ошибки ✅</span>
+  </div>
+  <div class="tip" style="margin-top:22px;">💡 Если что-то не получилось — не расстраивайся. Каждая ошибка сегодня — это +1 балл на следующей контрольной.</div>
+</section>
+
+<!-- НАВИГАЦИЯ -->
+<div class="nav">
+  <button onclick="go(cur-1)" aria-label="назад">←</button>
+  <span id="counter">1 / 18</span>
+  <button onclick="go(cur+1)" aria-label="вперёд">→</button>
+</div>
+<div class="hint">← → / пробел — листать · свайп на телефоне</div>
+<div class="bar-wrap"><div id="bar"></div></div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  let cur = 0;
+  function go(i){
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s,j)=>s.classList.toggle('active', j===cur));
+    document.getElementById('counter').textContent = (cur+1) + ' / ' + slides.length;
+    document.getElementById('bar').style.width = ((cur+1)/slides.length*100) + '%';
+    document.querySelector('.slide.active').scrollTop = 0;
+  }
+  document.addEventListener('keydown', e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown','Enter'].includes(e.key)) go(cur+1);
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)) go(cur-1);
+    if(e.key==='Home') go(0);
+    if(e.key==='End') go(slides.length-1);
+  });
+  let tx=0, ty=0;
+  document.addEventListener('touchstart', e=>{ tx=e.touches[0].clientX; ty=e.touches[0].clientY; }, {passive:true});
+  document.addEventListener('touchend', e=>{
+    const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)){ dx<0 ? go(cur+1) : go(cur-1); }
+  }, {passive:true});
+  go(0);
+</script>
+</body>
+</html>
